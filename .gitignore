@@ -1,0 +1,4 @@
+# If you turn this into a real project, you'll add .env, node_modules, etc.
+# Kept minimal here — this is a template, not a runnable project.
+
+.DS_Store
