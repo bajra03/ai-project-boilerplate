@@ -59,5 +59,6 @@ pnpm db:studio
 2. Check `.ai/patterns/` for code templates
 3. Check `.ai/design/` for tokens, component rules, a11y baseline
 4. Check `.ai/schemas/` for data shapes
-5. Check `.ai/tasks/current.md` for in-progress work
-6. Ask the user
+5. Check `.ai/roadmap.md` for current phase + planned deliverables
+6. Check `.ai/tasks/current.md` for in-progress work
+7. Ask the user

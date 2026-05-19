@@ -6,6 +6,37 @@ Prompts you find yourself reaching for repeatedly. Copy-paste, fill blanks.
 
 One-time setup after copying the boilerplate. Use the structured prompt in `./bootstrap.md` — it walks Claude through scan → ask → fill → first ADR → cleanup.
 
+## Fill or refresh the roadmap
+
+Run **after** bootstrap, and again later when planning V1/V2 or replanning after a pivot. Use the prompt in `./roadmap.md` — it scans existing `.ai/` context, asks max 5 questions, fills `.ai/roadmap.md` (or extends it), and updates `tasks/current.md` + `tasks/backlog.md`.
+
+## Run a phase from roadmap
+
+```
+Run <Pre-phase | Phase 1 | Phase 2 | Phase 3> from .ai/roadmap.md.
+
+1. Read the phase's Goal, Deliverables, Exit criteria.
+2. Promote unchecked deliverables into .ai/tasks/current.md "In progress".
+3. Set the phase Status to "in progress" in roadmap.md (add start date if missing).
+4. Work one deliverable at a time. After each:
+   - Check it off in roadmap.md ([ ] → [x])
+   - Move it to "Recently completed" in tasks/current.md
+   - Show me the diff, wait for "next" before continuing
+5. When all deliverables checked, run exit criteria as a checklist and report which pass / fail.
+
+Don't skip a deliverable to chase the next one. Don't mark the phase done — I'll do that after exit criteria pass.
+```
+
+## Mark phase done
+
+```
+Mark <phase> done in .ai/roadmap.md:
+- Status: done, set end date
+- Verify all deliverables [x] and exit criteria met (list any gap)
+- Append "Phase X complete" to tasks/current.md "Recently completed"
+- Suggest promoting the next phase (don't promote without confirmation)
+```
+
 ## Add a feature
 
 ```

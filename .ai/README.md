@@ -12,12 +12,17 @@ Structured project context. Update as the project evolves.
 - **`tasks/`** — Current and backlog work
 - **`prompts/`** — Reusable prompt templates
 
+## Top-level files
+
+- **`roadmap.md`** — Staged delivery plan (Pre-phase → Phase 1 → 2 → 3). Fill via `prompts/roadmap.md` after bootstrap; re-run when planning V1/V2.
+
 ## Update rules
 
 - Keep files **short** (<200 lines). AI scans, not reads.
 - Lead with **examples**, not abstract rules.
 - Include **negative examples**: "Don't X because Y."
 - Update `tasks/current.md` between sessions.
+- Update `roadmap.md` when a phase deliverable ships or status changes.
 - Add an ADR (`context/decisions/`) for any architectural choice you'd defend in a code review.
 
 ## See also

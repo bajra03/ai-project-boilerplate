@@ -81,7 +81,7 @@ End with a structured summary:
 - Files filled: [list]
 - Files left empty (and why): [list]
 - Open questions you'd still like answered later: [list, or "none"]
-- Suggested next prompt: [point me at .ai/prompts/reusable.md]
+- Suggested next prompt: run `.ai/prompts/roadmap.md` to draft Pre-phase + Phase 1–3 in `.ai/roadmap.md`
 
 RULES
 - Don't invent facts. If unsure, leave the TODO and note it in the final report.
