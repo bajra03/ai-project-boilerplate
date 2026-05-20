@@ -175,6 +175,9 @@ RULES
 - Don't invent facts. If unsure, leave the TODO and note it in the final report.
 - Don't add new dependencies, frameworks, or config files. You're documenting what exists or what the user declared as planned.
 - Keep every file under 200 lines (boilerplate principle).
+  Exception: `.ai/design/design.md` is intentionally long (tokens +
+  component rules + a11y baseline with worked examples). Don't trim
+  it to fit the cap.
 - Match the existing tone in each file (examples first, negative examples, bullet rules).
 - Don't touch source code. Documentation only.
 ```

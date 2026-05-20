@@ -4,6 +4,8 @@ Lock the visual language before the first component is written. Prevents AI drif
 
 Three sections below: **Tokens** (values), **Component Rules** (usage), **Accessibility** (baseline). Backend-only project? Leave the file empty or delete it — AI will see "no rules" and not invent any.
 
+> **Note for AI:** this file is exempt from the boilerplate's <200-line rule. Design guidance needs concrete examples — keep them.
+
 See also: `../patterns/components.md` (React component file/code conventions), `../context/tech-stack.md` (confirms styling stack).
 
 ---

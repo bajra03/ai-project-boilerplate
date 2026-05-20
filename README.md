@@ -66,6 +66,8 @@ When the boilerplate evolves:
 ## Principles
 
 1. **Short files.** AI scans, doesn't read. Aim <200 lines per file.
+   Exception: `.ai/design/design.md` — design rules carry worked
+   examples that lose value when trimmed.
 2. **Examples beat rules.** Show, don't tell.
 3. **Negative examples too.** "Don't do X because Y."
 4. **Commit `.ai/`.** Version-controlled context.

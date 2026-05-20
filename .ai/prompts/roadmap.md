@@ -79,6 +79,9 @@ CROSS-WRITE (always)
 RULES
 - Don't invent deliverables. If unsure, leave a `<!-- TODO -->` and note in report.
 - Keep file <200 lines (boilerplate principle).
+  Exception: `.ai/design/design.md` is intentionally long (tokens +
+  component rules + a11y baseline with worked examples). Don't trim
+  it to fit the cap.
 - Match existing tone — concrete deliverables, strict exit criteria.
 - Exit criteria must be testable (not "feature feels good").
 - Don't touch source code. Documentation only.

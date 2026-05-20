@@ -19,6 +19,8 @@ Structured project context. Update as the project evolves.
 ## Update rules
 
 - Keep files **short** (<200 lines). AI scans, not reads.
+  Exception: `design/design.md` — design rules need worked examples
+  that don't compress without losing value.
 - Lead with **examples**, not abstract rules.
 - Include **negative examples**: "Don't X because Y."
 - Update `tasks/current.md` between sessions.
