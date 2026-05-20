@@ -73,4 +73,31 @@ if (err.message === "no rows") { /* ... */ }   // brittle
 
 ## Logging
 
-<!-- TODO: which logger, where logs go, what to include / redact -->
+```ts
+// src/lib/logger.ts — structured logger (swap pino for winston / console if needed)
+import pino from "pino"
+
+export const logger = pino({
+  level: process.env.LOG_LEVEL ?? "info",
+  redact: ["body.password", "body.token", "headers.authorization", "*.secret"],
+})
+```
+
+```ts
+// Usage
+logger.info({ userId, action: "order.created", orderId }, "Order created")
+logger.warn({ userId, reason }, "Retry triggered")
+logger.error({ err, userId }, "Unhandled error in payment flow")
+```
+
+What to log (with structured fields, not string concatenation):
+| Level | When |
+|-------|------|
+| `info` | Significant state transitions (created, confirmed, cancelled) |
+| `warn` | Recoverable oddities — unexpected state handled gracefully |
+| `error` | Caught unexpected errors before returning 500 |
+
+What NOT to log:
+- PII in prod: email, phone, full name, address — log IDs, reference them in your DB.
+- Secrets, tokens, raw request bodies that contain credentials.
+- High-frequency read paths (every `GET /api/items`) — use metrics/traces instead.

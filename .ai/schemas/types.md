@@ -43,4 +43,17 @@ export type CreateInput = typeof CreateSchema  // wrong — use z.infer
 
 ## Core domain types
 
-<!-- TODO: list types AI should know about. Often these are the names that show up in many files. -->
+<!-- TODO: fill in the types central to this project. They should match names in src/db/schema.ts and src/types/.
+
+Example format:
+
+| Type | Source | Description |
+|------|--------|-------------|
+| `User` | `src/db/types.ts` | Authenticated account. Row from `users` table. |
+| `Session` | `src/db/types.ts` | Active auth session. Row from `sessions` table. |
+| `<Entity>` | `src/db/types.ts` | … |
+| `<Entity>WithRelations` | `src/types/domain.ts` | Hydrated shape with joined data. |
+| `Create<Entity>Input` | `src/types/api.ts` | Validated POST body shape (via Zod). |
+
+After bootstrap, replace this block with the actual types table.
+-->

@@ -67,4 +67,24 @@ const tours = await db.select().from(tours)  // inline DB code spreads everywher
 
 ## Migrations
 
-<!-- TODO: how migrations are generated and applied. Drizzle: `pnpm db:generate` + `pnpm db:migrate`. Prisma: `prisma migrate dev`. -->
+```bash
+# Drizzle
+pnpm db:generate    # diff schema.ts → generate SQL migration file
+pnpm db:migrate     # apply pending migrations to DB
+pnpm db:studio      # open Drizzle Studio (browser DB viewer)
+
+# Prisma
+pnpm exec prisma migrate dev     # generate + apply in dev (creates migration file)
+pnpm exec prisma migrate deploy  # apply only in prod / CI (no generation)
+pnpm exec prisma studio          # open Prisma Studio
+```
+
+Rules:
+- Migrations are **append-only** — never edit a migration file once committed.
+- Always review generated SQL before applying — generators miss nuanced constraints.
+- Destructive changes (drop column, rename) require a **multi-step strategy**:
+  1. Add new column (deploy)
+  2. Backfill data (run script)
+  3. Update code to use new column (deploy)
+  4. Drop old column (deploy, separate PR)
+- Run `db:migrate` in CI against a real DB; never skip in test pipelines.

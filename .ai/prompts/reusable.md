@@ -106,4 +106,29 @@ Show the diff before saving.
 
 ## Custom
 
-<!-- TODO: add prompts you reuse in this project -->
+<!-- Add project-specific prompts here after bootstrap. Suggested candidates:
+
+## Seed / reset dev DB
+```
+Reset the dev database and re-seed with fixture data from src/db/seed.ts.
+Run: pnpm db:push && pnpm db:seed
+Confirm row counts per table after seed.
+```
+
+## Write a migration
+```
+Write a Drizzle/Prisma migration to <change>.
+Steps: update schema.ts → run db:generate → review generated SQL → confirm before applying.
+Follow .ai/patterns/db-queries.md#migrations — append-only, no edits to existing files.
+```
+
+## Security review
+```
+Review the diff for security issues. Focus on:
+1. Input validation — every external input goes through Zod or equivalent.
+2. Auth checks — requireAuth() called before reading body on protected routes.
+3. Secrets — no env vars or tokens in client bundles or logs.
+4. Injection — no raw SQL string interpolation.
+Report: file:line, severity (high/med/low), fix suggestion.
+```
+-->

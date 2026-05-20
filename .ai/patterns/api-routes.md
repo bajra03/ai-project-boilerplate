@@ -65,8 +65,69 @@ return Response.json({ error: err }, { status: 500 })
 
 ## Webhooks
 
-<!-- TODO: how to handle Stripe / external webhooks (verify signature, idempotency key) -->
+```ts
+// src/app/api/webhooks/<provider>/route.ts
+import { headers } from "next/headers"
+import { NextRequest } from "next/server"
+
+export async function POST(req: NextRequest) {
+  const body = await req.text() // must read as raw text before parsing
+  const sig = headers().get("stripe-signature") ?? ""
+
+  let event: Stripe.Event
+  try {
+    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+  } catch {
+    return apiError(400, "invalid_signature")
+  }
+
+  // Idempotency: skip if already processed
+  const already = await db.query.webhookEvents.findFirst({ where: eq(webhookEvents.externalId, event.id) })
+  if (already) return apiOk({ received: true })
+
+  await db.insert(webhookEvents).values({ externalId: event.id, type: event.type })
+
+  switch (event.type) {
+    case "payment_intent.succeeded":
+      // handle...
+      break
+    default:
+      // ignore unknown events — don't throw
+  }
+
+  return apiOk({ received: true })
+}
+```
+
+Rules:
+- **Verify signature** before touching the body — reject unknown callers.
+- **Idempotency key** = provider's event ID. Store it; skip duplicate deliveries.
+- **Return 200 fast.** Vendors retry on non-2xx. Do heavy work in a background job.
+- Raw body must be read as `text()` — do not call `req.json()` first.
 
 ## Rate limiting
 
-<!-- TODO: which routes are rate-limited and how -->
+```ts
+// src/lib/ratelimit.ts — using Upstash Ratelimit (swap for any provider)
+import { Ratelimit } from "@upstash/ratelimit"
+import { Redis } from "@upstash/redis"
+
+export const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(10, "10 s"),
+})
+
+// In a route handler:
+const ip = req.ip ?? req.headers.get("x-forwarded-for") ?? "anon"
+const { success, reset } = await ratelimit.limit(ip)
+if (!success) {
+  return apiError(429, "rate_limited", { retryAfter: reset })
+}
+```
+
+Which routes to rate-limit:
+- All auth endpoints (`/api/auth/*`)
+- Public-facing POST/PUT endpoints (forms, contact, magic-link)
+- Any endpoint that sends email / SMS
+
+Which routes to skip: internal callbacks, health checks, webhooks (rate-limited by provider).
