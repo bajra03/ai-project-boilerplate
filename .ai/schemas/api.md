@@ -64,4 +64,20 @@ Create a booking.
 
 ## Webhooks
 
-<!-- TODO: incoming webhooks (Stripe, etc.) with signature verification notes -->
+Incoming webhooks land at `/api/webhooks/<provider>`.
+
+Pattern: **verify signature → idempotency check → process → 200**
+
+```
+POST /api/webhooks/stripe
+POST /api/webhooks/<other-provider>
+```
+
+Auth: raw HMAC signature in `Stripe-Signature` header (or equivalent). Do **not** use Bearer tokens.
+
+Rules:
+- Always read body as raw text before verifying — `req.text()`, not `req.json()`.
+- Return `200` even if event was already processed — vendors retry on non-2xx.
+- Reject unknown/unverifiable payloads with `400 invalid_signature`.
+
+<!-- TODO: list registered webhook URLs and which events each handles, once configured -->
