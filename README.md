@@ -55,9 +55,7 @@ When the boilerplate evolves:
 | `.ai/context/glossary.md` | Domain terms |
 | `.ai/context/decisions/` | ADRs — one per major decision |
 | `.ai/patterns/*.md` | Code templates: components, APIs, DB, errors |
-| `.ai/design/tokens.md` | Color / spacing / typography / breakpoint tokens |
-| `.ai/design/components.md` | Design-system component usage rules |
-| `.ai/design/a11y.md` | Accessibility baseline (WCAG, keyboard, ARIA) |
+| `.ai/design/design.md` | Tokens, component usage rules, a11y baseline |
 | `.ai/schemas/*.md` | Data shapes: DB tables, API contracts, types |
 | `.ai/runbooks/*.md` | Step-by-step playbooks: add feature, debug, deploy |
 | `.ai/tasks/current.md` | What's in progress now (continuity between sessions) |

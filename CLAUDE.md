@@ -44,7 +44,7 @@ pnpm db:studio
 - <!-- TODO: project-specific must-dos -->
 - Run typecheck before claiming done
 - Match existing patterns — see `.ai/patterns/`
-- For UI work, follow `.ai/design/` (tokens, component rules, a11y)
+- For UI work, follow `.ai/design/design.md` (tokens, component rules, a11y)
 
 ## Never
 
@@ -57,7 +57,7 @@ pnpm db:studio
 
 1. Check `.ai/context/architecture.md` for system overview
 2. Check `.ai/patterns/` for code templates
-3. Check `.ai/design/` for tokens, component rules, a11y baseline
+3. Check `.ai/design/design.md` for tokens, component rules, a11y baseline
 4. Check `.ai/schemas/` for data shapes
 5. Check `.ai/roadmap.md` for current phase + planned deliverables
 6. Check `.ai/tasks/current.md` for in-progress work

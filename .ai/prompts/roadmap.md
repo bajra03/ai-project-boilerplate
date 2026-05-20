@@ -31,7 +31,7 @@ PROJECT CONTEXT TO LOAD
 - .ai/context/architecture.md → components, data flow
 - .ai/context/tech-stack.md → frameworks
 - .ai/schemas/database.md + .ai/schemas/api.md → data surfaces (if present)
-- .ai/design/components.md → component inventory (if UI project)
+- .ai/design/design.md → tokens, component rules, a11y (if UI project)
 - .ai/runbooks/deploy.md → deploy target
 - .ai/tasks/backlog.md → already-rejected scope (don't add to phases)
 
@@ -55,7 +55,7 @@ For MODE=fill:
 - Pre-phase deliverables → derive from CLAUDE.md "Commands" + tech-stack.md
   (scaffold, lint/format, env, CI, .ai/ context)
 - Phase 1 (frontend + mock data) deliverables → derive from user's core flows
-  + .ai/design/components.md. Reference src/mocks/ for fixtures.
+  + .ai/design/design.md. Reference src/mocks/ for fixtures.
 - Phase 2 (backend + real data) deliverables → derive from .ai/schemas/database.md
   + .ai/schemas/api.md + auth model.
 - Phase 3 (polish + launch) deliverables → derive from .ai/runbooks/deploy.md

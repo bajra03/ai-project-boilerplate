@@ -44,10 +44,10 @@ Staged delivery plan for this project. Update as phases progress.
 **Deliverables**
 
 - [ ] <!-- TODO: route map / page list -->
-- [ ] <!-- TODO: core components per `.ai/design/components.md` -->
+- [ ] <!-- TODO: core components per `.ai/design/design.md` (Component Rules section) -->
 - [ ] <!-- TODO: mock data fixtures (`src/mocks/`) -->
 - [ ] <!-- TODO: empty / loading / error states for every screen -->
-- [ ] <!-- TODO: responsive + a11y baseline (per `.ai/design/a11y.md`) -->
+- [ ] <!-- TODO: responsive + a11y baseline (per `.ai/design/design.md` Accessibility section) -->
 
 **Exit criteria**
 
