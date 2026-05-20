@@ -16,42 +16,44 @@ Snapshot of tables and relationships. Update when migrations change.
 
 ### `users`
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id | uuid | PK |
-| email | text | unique, not null |
-| created_at | timestamptz | default now() |
+| Column     | Type        | Notes            |
+| ---------- | ----------- | ---------------- |
+| id         | uuid        | PK               |
+| email      | text        | unique, not null |
+| created_at | timestamptz | default now()    |
 
 ### `tours`
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id | uuid | PK |
-| operator_id | uuid | FK → operators.id, on delete cascade |
-| title | text | not null |
-| price_usd | numeric(10,2) | not null |
-| status | text | enum: draft / published / archived |
+| Column      | Type          | Notes                                |
+| ----------- | ------------- | ------------------------------------ |
+| id          | uuid          | PK                                   |
+| operator_id | uuid          | FK → operators.id, on delete cascade |
+| title       | text          | not null                             |
+| price_usd   | numeric(10,2) | not null                             |
+| status      | text          | enum: draft / published / archived   |
 
 <!-- ... -->
 
 ## Relationships
 
-<!-- TODO: ASCII or bullet list of FK relationships.
-- users 1—N bookings
-- tours 1—N bookings
-- operators 1—N tours
+<!-- TODO: replace with actual FK relationships. Example format:
+- users 1—N <resource>     (FK: <resource>.user_id → users.id)
+- <parent> 1—N <child>     (FK: <child>.<parent>_id → <parent>.id, on delete cascade)
 -->
 
 ## Indexes
 
-<!-- TODO: non-PK indexes that matter for query performance.
-- `bookings (user_id, status)` — list user's active bookings
-- `tours (operator_id) where deleted_at is null` — operator dashboard
+<!-- TODO: non-PK indexes that matter for query performance. Example format:
+- `<table> (<col>, <col>)` — reason (query it supports)
+- `<table> (<col>) where deleted_at is null` — partial index for soft-delete pattern
 -->
 
 ## Enums / status values
 
-<!-- TODO: enumerated string columns -->
+<!-- TODO: list enumerated string columns. Example format:
+- `<table>.status`: `draft` → `active` → `archived`
+- `<table>.role`: `admin` | `member` | `viewer`
+-->
 
 ## Notes for AI
 

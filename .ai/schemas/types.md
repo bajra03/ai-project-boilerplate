@@ -13,11 +13,11 @@ Shared TypeScript types used across the app. The single source of truth.
 
 ```ts
 // src/db/types.ts
-import { tours } from "@/db/schema"
-import type { InferSelectModel, InferInsertModel } from "drizzle-orm"
+import { tours } from '@/db/schema';
+import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 
-export type Tour = InferSelectModel<typeof tours>
-export type NewTour = InferInsertModel<typeof tours>
+export type Tour = InferSelectModel<typeof tours>;
+export type NewTour = InferInsertModel<typeof tours>;
 ```
 
 ## Naming
@@ -32,13 +32,16 @@ export type NewTour = InferInsertModel<typeof tours>
 
 ```ts
 // ❌ Don't: redeclare DB types manually
-interface Tour { id: string; title: string }  // drifts from schema
+interface Tour {
+  id: string;
+  title: string;
+} // drifts from schema
 
 // ❌ Don't: use `any` for "shape we'll figure out later"
-const data: any = await fetchSomething()
+const data: any = await fetchSomething();
 
 // ❌ Don't: export Zod schemas as types directly
-export type CreateInput = typeof CreateSchema  // wrong — use z.infer
+export type CreateInput = typeof CreateSchema; // wrong — use z.infer
 ```
 
 ## Core domain types
