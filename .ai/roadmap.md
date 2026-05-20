@@ -24,12 +24,12 @@ Staged delivery plan for this project. Update as phases progress.
 - [ ] <!-- TODO: framework scaffold (Next.js / Vite / etc.) -->
 - [ ] <!-- TODO: env vars documented in `.env.example` -->
 - [ ] <!-- TODO: `.ai/context/`, `.ai/patterns/`, `.ai/schemas/` filled in -->
-- [ ] <!-- TODO: CI green on empty project (typecheck + lint + test) -->
+- [ ] <!-- TODO: local checks green on empty project (typecheck + lint + test runnable via pnpm) -->
 
 **Exit criteria**
 
 - `pnpm dev` runs locally with no errors
-- `pnpm build` + `pnpm test` pass in CI
+- `pnpm build` + `pnpm test` pass locally
 - A new contributor can clone, install, and run in <10 min
 
 **Status:** not started
@@ -48,12 +48,17 @@ Staged delivery plan for this project. Update as phases progress.
 - [ ] <!-- TODO: mock data fixtures (`src/mocks/`) -->
 - [ ] <!-- TODO: empty / loading / error states for every screen -->
 - [ ] <!-- TODO: responsive + a11y baseline (per `.ai/design/design.md` Accessibility section) -->
+- [ ] <!-- TODO: push repo to GitHub (default branch protected) -->
+- [ ] <!-- TODO: remote CI wired (GitHub Actions: typecheck + lint + test on PRs and main) -->
+- [ ] <!-- TODO: preview deploy to Vercel (or equivalent host) tracking main branch -->
 
 **Exit criteria**
 
 - Every screen reachable from the nav
 - Designer / PM can click through happy path without explanation
 - No real API calls — swapping mocks for real fetches is the only Phase 2 frontend change
+- Remote CI is green on the default branch
+- Preview URL is reachable and shows mock-data flows end-to-end
 
 **Status:** not started
 **Dates:** <!-- TODO -->
