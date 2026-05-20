@@ -16,7 +16,9 @@ Run this **immediately after copying the boilerplate** into a fresh project. It 
 You are bootstrapping the .ai/ + CLAUDE.md scaffold for this project.
 Your job: fill every TODO marker so future Claude sessions start with full context.
 
-PROJECT
+PROJECT (the user fills these in before pasting. If any field still
+contains the bracketed `[...]` example text or is blank, treat it as
+NOT PROVIDED and ASK for it — see step 0 below.)
 - Name: [project name]
 - One-liner: [what it does, who uses it]
 - Stage: [greenfield / existing codebase / migrating from X]
@@ -26,6 +28,26 @@ PROJECT
 - Runtime: [Node 20 LTS / Node 22 / Bun 1.x / Deno / other]
 
 PROCESS (follow in order, don't skip)
+
+0. PRE-FLIGHT — confirm PROJECT block
+   Look at the PROJECT block above. For each field:
+   - If the value still contains the bracketed example
+     (e.g. `[project name]`, `[standard single-app / pnpm-workspaces / ...]`),
+     OR the value is blank,
+     → treat it as NOT PROVIDED.
+
+   MANDATORY (ask now, in one batch, before scanning):
+   - Name
+   - Stage  (greenfield / existing / migrating)
+   - Surface (web / mobile / API / CLI / library / mix)
+   - Repo structure (standard single-app / pnpm-workspaces / turborepo /
+     nx / yarn-workspaces / other)
+
+   SOFT (defer to step 2a if blank — infer first, ask only if not inferable):
+   - One-liner, Package manager, Runtime
+
+   Wait for the user's reply, update the PROJECT block in your working
+   memory, then proceed to step 1.
 
 1. SCAN
    Read these in this order:
@@ -40,8 +62,8 @@ PROCESS (follow in order, don't skip)
 
 2. ASK (one batch — wait for answers before writing)
 
-   2a. ALWAYS ASK (skip any you can confidently infer from code):
-       - Confirm package manager and runtime if not declared above
+   2a. ALWAYS ASK (skip any already collected in pre-flight or inferable from code):
+       - Confirm package manager and runtime if still not declared
        - Deployment target (Vercel / Fly / Railway / Cloudflare / self-hosted / etc.)
        - Out-of-scope items the AI should NOT propose
          (goes into tasks/backlog.md rejections)
