@@ -79,10 +79,30 @@ I just shipped <change>. Update .ai/ to reflect it:
 - schemas/database.md if tables changed
 - schemas/api.md if endpoints changed
 - patterns/ if a new pattern emerged
+- design/design.md if tokens, component library, or brand source changed
 - tasks/current.md to mark done
 
 Don't update files that didn't actually change.
 ```
+
+## Refresh design rules
+
+Run when Tailwind config, theme CSS vars, the component library, or the brand source-of-truth has changed since the last `.ai/design/design.md` update.
+
+````
+Refresh .ai/design/design.md to match current code.
+
+Re-scan:
+- tailwind.config.* and globals.css / theme files → token map, fonts,
+  radii, shadows, breakpoints, z-scale
+- src/components/ui/ (or wherever the design system lives) → component
+  library line + project-specific rules
+- Brand / Figma source-of-truth URL (if changed)
+
+Update only sections that drifted. Don't touch the WCAG baseline unless
+we've made a deliberate exception (document inline if so).
+Show the diff before saving.
+````
 
 ## Custom
 

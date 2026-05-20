@@ -100,8 +100,29 @@ PROCESS (follow in order, don't skip)
 
 4. DESIGN FOLDER DECISION
    - UI project (React/Vue/Svelte/mobile)?
-     → Fill .ai/design/design.md (Tokens, Component Rules, Accessibility sections) using tailwind.config + globals.css if present.
-       If design source of truth is Figma/Storybook, reference the URL at the top of the Design Tokens section.
+     → Fill .ai/design/design.md section by section. Don't rewrite the file —
+       only replace TODO markers and add observed project specifics.
+
+       TOKENS section:
+       - Source of truth line: point to actual config
+         (e.g. `tailwind.config.ts` + `src/app/globals.css`)
+       - Token map: extract semantic color tokens from globals.css CSS vars / theme config
+       - Typography families: read font config (next/font, @import, theme.fontFamily)
+       - Custom radii / shadows / breakpoints / z-scale: only override the template
+         tables if the project actually defines custom values
+       - Figma/Storybook URL (if user provided one): anchor at top of Tokens section
+
+       COMPONENT RULES section:
+       - Component library line: detect from code
+         (e.g. shadcn/ui at src/components/ui/, Radix, MUI, Chakra, Mantine, custom)
+       - Project-specific rules: only fill if observable patterns exist
+         (e.g. "all icons from lucide-react, sizes 16/20/24 only" — only if grep confirms)
+
+       ACCESSIBILITY section:
+       - Verified pairs: list semantic color pairs that pass WCAG in both light and dark
+         (only if you can verify against globals.css)
+       - Leave the rest of the baseline as-is — it's WCAG-driven, not project-specific
+
    - Backend / CLI / library only?
      → Ask me first: "Delete .ai/design/ since no UI surface? (y/n)"
        Only delete after I confirm.
