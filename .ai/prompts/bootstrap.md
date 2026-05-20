@@ -122,28 +122,18 @@ PROCESS (follow in order, don't skip)
 
 4. DESIGN FOLDER DECISION
    - UI project (React/Vue/Svelte/mobile)?
-     → Fill .ai/design/design.md section by section. Don't rewrite the file —
-       only replace TODO markers and add observed project specifics.
+     → Run `.ai/prompts/design-discovery.md` end-to-end. It is a Senior PM
+       + Senior Frontend Designer brainstorm that:
+         A. Detects the project category
+         B. Proposes 3–5 style directions tailored to it
+         C. Waits for the user to pick (or paste a reference URL, or combine)
+         D. Records the chosen direction in design.md's `## Design Direction`
+         E. Fills Tokens + Component Rules + Accessibility aligned with it
 
-       TOKENS section:
-       - Source of truth line: point to actual config
-         (e.g. `tailwind.config.ts` + `src/app/globals.css`)
-       - Token map: extract semantic color tokens from globals.css CSS vars / theme config
-       - Typography families: read font config (next/font, @import, theme.fontFamily)
-       - Custom radii / shadows / breakpoints / z-scale: only override the template
-         tables if the project actually defines custom values
-       - Figma/Storybook URL (if user provided one): anchor at top of Tokens section
-
-       COMPONENT RULES section:
-       - Component library line: detect from code
-         (e.g. shadcn/ui at src/components/ui/, Radix, MUI, Chakra, Mantine, custom)
-       - Project-specific rules: only fill if observable patterns exist
-         (e.g. "all icons from lucide-react, sizes 16/20/24 only" — only if grep confirms)
-
-       ACCESSIBILITY section:
-       - Verified pairs: list semantic color pairs that pass WCAG in both light and dark
-         (only if you can verify against globals.css)
-       - Leave the rest of the baseline as-is — it's WCAG-driven, not project-specific
+       Do NOT fill design.md before running the discovery prompt — even
+       if the codebase already has Tailwind/shadcn configured. In that
+       case, the discovery confirms the direction matches the code (or
+       surfaces a pivot).
 
    - Backend / CLI / library only?
      → Ask me first: "Delete .ai/design/ since no UI surface? (y/n)"

@@ -104,6 +104,17 @@ we've made a deliberate exception (document inline if so).
 Show the diff before saving.
 ````
 
+## Rediscover design direction
+
+Run when the product is pivoting, rebranding, or the current visual identity no longer fits. Restarts the brainstorm and overwrites the Design Direction block.
+
+```
+Re-run .ai/prompts/design-discovery.md.
+After I pick a new direction, overwrite design.md's `## Design Direction`
+section and refresh Tokens + Component Rules to match.
+Don't touch the Accessibility baseline.
+```
+
 ## Custom
 
 <!-- TODO: add prompts you reuse in this project -->

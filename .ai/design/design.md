@@ -2,11 +2,27 @@
 
 Lock the visual language before the first component is written. Prevents AI drift: random Tailwind classes, off-palette colors, ad-hoc spacing, missing focus states.
 
-Three sections below: **Tokens** (values), **Component Rules** (usage), **Accessibility** (baseline). Backend-only project? Leave the file empty or delete it — AI will see "no rules" and not invent any.
+A **Design Direction** block (filled during brainstorm — see `../prompts/design-discovery.md`) captures the chosen visual identity. Three reference sections follow: **Tokens** (values), **Component Rules** (usage), **Accessibility** (baseline). Backend-only project? Leave the file empty or delete it — AI will see "no rules" and not invent any.
 
 > **Note for AI:** this file is exempt from the boilerplate's <200-line rule. Design guidance needs concrete examples — keep them.
 
 See also: `../patterns/components.md` (React component file/code conventions), `../context/tech-stack.md` (confirms styling stack).
+
+---
+
+## Design Direction
+
+<!-- TODO: filled during design-discovery brainstorm
+     (see `../prompts/design-discovery.md`) — do not skip -->
+
+- **Style:**
+- **Vibe:**
+- **References:**
+- **Philosophy:**
+- **Interaction:** snappy / smooth / playful / restrained
+- **Animation:** minimal / generous / motion-first
+- **Layout:** grid-dense / spacious / card-driven / asymmetric
+- **Responsive:** mobile-first / desktop-first / app-shell
 
 ---
 
