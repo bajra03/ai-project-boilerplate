@@ -67,4 +67,30 @@ const tours = await db.select().from(tours)  // inline DB code spreads everywher
 
 ## Migrations
 
-<!-- TODO: how migrations are generated and applied. Drizzle: `pnpm db:generate` + `pnpm db:migrate`. Prisma: `prisma migrate dev`. -->
+Schema changes go through generated, version-controlled migrations — never edit
+the DB by hand. Generate from the schema, review the SQL, commit it.
+
+```bash
+# Drizzle
+pnpm db:generate     # diff schema.ts → new migration file (review the SQL!)
+pnpm db:migrate      # apply pending migrations
+
+# Prisma
+pnpm prisma migrate dev --name <change>   # generate + apply in dev
+pnpm prisma migrate deploy                # apply in CI/prod
+```
+
+- **Always review** the generated SQL before committing — generators miss intent
+  (renames look like drop+add and lose data).
+- **Additive is safe** (new nullable column, new table); **destructive needs
+  sequencing** (ship code that ignores the column first, drop it in a later
+  migration). See `../runbooks/deploy.md` § Migrations.
+- **Never edit a migration** already applied to staging/prod — add a new one.
+
+```bash
+# ❌ Don't: hand-edit tables in prod — schema.ts and DB drift apart
+psql -c "ALTER TABLE tours ADD COLUMN ..."
+```
+
+<!-- TODO: confirm this project's exact generate/apply commands + ORM -->
+

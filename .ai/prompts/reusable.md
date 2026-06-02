@@ -6,9 +6,13 @@ Prompts you find yourself reaching for repeatedly. Copy-paste, fill blanks.
 
 One-time setup after copying the boilerplate. Use the structured prompt in `./bootstrap.md` — it walks Claude through scan → ask → fill → first ADR → cleanup.
 
+## Fill or refresh the product brief
+
+Run **after** bootstrap (or when the product pivots / target user shifts). Use the prompt in `./product-discovery.md` — a Senior PM brainstorm that confirms problem/users/job, then fills `.ai/product/brief.md`, `metrics.md`, `risks.md`. High×High risks become Pre-phase spikes in the roadmap.
+
 ## Fill or refresh the roadmap
 
-Run **after** bootstrap, and again later when planning V1/V2 or replanning after a pivot. Use the prompt in `./roadmap.md` — it scans existing `.ai/` context, asks max 5 questions, fills `.ai/roadmap.md` (or extends it), and updates `tasks/current.md` + `tasks/backlog.md`.
+Run **after** bootstrap and product discovery, and again later when planning V1/V2 or replanning after a pivot. Use the prompt in `./roadmap.md` — it scans existing `.ai/` context (incl. `product/brief.md` + `design/ux-flows.md`), asks max 5 questions, fills `.ai/roadmap.md` (or extends it), and updates `tasks/current.md` + `tasks/backlog.md`.
 
 ## Run a phase from roadmap
 
@@ -83,6 +87,51 @@ I just shipped <change>. Update .ai/ to reflect it:
 - tasks/current.md to mark done
 
 Don't update files that didn't actually change.
+```
+
+## Add a test
+
+```
+Write tests for <unit/feature> following .ai/patterns/testing.md.
+Mock only the external boundary; run real DB/logic. Name tests by behavior.
+Cover the success path + the main failure. Show me the tests before running.
+```
+
+## Security review
+
+```
+Review <diff/feature> against .ai/patterns/security.md. Check specifically:
+1. Authz — ownership/role checked on every user-scoped read + write (not just authn)?
+2. Input — validated shape AND semantics; no string-built SQL/HTML?
+3. Secrets/PII — nothing logged or returned that shouldn't be?
+Flag each issue with file:line + the fix.
+```
+
+## Incident response
+
+```
+Production is <symptom>. Follow .ai/runbooks/incident.md.
+1. Set severity. 2. Mitigate first (rollback/flag) — see runbooks/deploy.md.
+3. Then find root cause from logs/metrics (.ai/patterns/observability.md).
+Don't debug live while users are hitting the error.
+```
+
+## Refresh metrics
+
+```
+Update .ai/product/metrics.md to match what's shipped.
+- Add events for new funnel steps / key actions (noun_verb, typed props, no PII)
+- Reconcile KPIs with what's actually instrumented
+Don't rename live events. Show the diff before saving.
+```
+
+## Risk review
+
+```
+Review .ai/product/risks.md against current state.
+- Close de-risked rows (mark validated/killed + result, don't delete)
+- Add risks that emerged; score L×I; propose a cheap validation experiment
+- Flag any new High×High that should be a roadmap spike before more is built on it.
 ```
 
 ## Refresh design rules

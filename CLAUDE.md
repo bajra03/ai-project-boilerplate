@@ -45,6 +45,8 @@ pnpm db:studio
 - Run typecheck before claiming done
 - Match existing patterns — see `.ai/patterns/`
 - For UI work, follow `.ai/design/design.md` (tokens, component rules, a11y)
+- Write tests per `.ai/patterns/testing.md`; ship a regression test with each bug fix
+- Check authz (ownership/role), not just authn — see `.ai/patterns/security.md`
 
 ## Never
 
@@ -56,9 +58,10 @@ pnpm db:studio
 ## When unsure
 
 1. Check `.ai/context/architecture.md` for system overview
-2. Check `.ai/patterns/` for code templates
-3. Check `.ai/design/design.md` for tokens, component rules, a11y baseline
-4. Check `.ai/schemas/` for data shapes
-5. Check `.ai/roadmap.md` for current phase + planned deliverables
-6. Check `.ai/tasks/current.md` for in-progress work
-7. Ask the user
+2. Check `.ai/product/brief.md` for the problem, users, and what success means
+3. Check `.ai/patterns/` for code templates (components, API, DB, testing, security, state, env, observability)
+4. Check `.ai/design/design.md` + `.ai/design/ux-flows.md` for visual rules and user flows
+5. Check `.ai/schemas/` for data shapes
+6. Check `.ai/roadmap.md` for current phase + planned deliverables
+7. Check `.ai/tasks/current.md` for in-progress work
+8. Ask the user

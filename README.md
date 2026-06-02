@@ -54,13 +54,19 @@ When the boilerplate evolves:
 | `.ai/context/tech-stack.md` | Frameworks, versions, why chosen |
 | `.ai/context/glossary.md` | Domain terms |
 | `.ai/context/decisions/` | ADRs — one per major decision |
-| `.ai/patterns/*.md` | Code templates: components, APIs, DB, errors |
-| `.ai/design/design.md` | Tokens, component usage rules, a11y baseline |
+| `.ai/product/brief.md` | Problem, users, JTBD, success metrics, scope |
+| `.ai/product/metrics.md` | North star, KPIs, funnel, event instrumentation |
+| `.ai/product/risks.md` | Risk register — assumptions to de-risk early |
+| `.ai/patterns/*.md` | Code templates: components, APIs, DB, errors, testing, security, state, env, observability |
+| `.ai/design/design.md` | Tokens, component rules, layout, states, motion, microcopy, perf, a11y |
+| `.ai/design/ux-flows.md` | Information architecture + core user flows |
 | `.ai/schemas/*.md` | Data shapes: DB tables, API contracts, types |
-| `.ai/runbooks/*.md` | Step-by-step playbooks: add feature, debug, deploy |
+| `.ai/runbooks/*.md` | Step-by-step playbooks: add feature, debug, deploy, incident |
 | `.ai/tasks/current.md` | What's in progress now (continuity between sessions) |
 | `.ai/tasks/backlog.md` | What's next |
 | `.ai/prompts/bootstrap.md` | One-time setup prompt for fresh projects |
+| `.ai/prompts/product-discovery.md` | PM brainstorm → fills `product/` |
+| `.ai/prompts/design-discovery.md` | Designer brainstorm → fills `design/` |
 | `.ai/prompts/reusable.md` | Prompts you reuse often |
 
 ## Principles
