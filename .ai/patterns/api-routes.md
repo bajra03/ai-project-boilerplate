@@ -65,8 +65,49 @@ return Response.json({ error: err }, { status: 500 })
 
 ## Webhooks
 
-<!-- TODO: how to handle Stripe / external webhooks (verify signature, idempotency key) -->
+Webhooks are untrusted POSTs from outside. **Verify the signature before doing
+anything**, and make handling idempotent — providers retry, so you'll see the
+same event more than once.
+
+```ts
+// src/app/api/webhooks/stripe/route.ts
+export async function POST(req: NextRequest) {
+  const raw = await req.text()                          // raw body, not parsed JSON
+  const sig = req.headers.get("stripe-signature")!
+  let event
+  try {
+    event = stripe.webhooks.constructEvent(raw, sig, env.STRIPE_WEBHOOK_SECRET)
+  } catch {
+    return apiError(400, "invalid_signature")           // reject unverified
+  }
+
+  if (await alreadyProcessed(event.id)) return apiOk(null)   // idempotency guard
+  await handleEvent(event)
+  await markProcessed(event.id)
+  return apiOk(null)
+}
+```
+
+- Read the **raw body** for signature verification — don't `req.json()` first.
+- Store processed event ids; skip duplicates.
+- Return 2xx fast; offload slow work to a job so the provider doesn't retry.
+
+```ts
+// ❌ Don't: trust a webhook without verifying the signature
+const event = await req.json()   // anyone can POST this
+```
 
 ## Rate limiting
 
-<!-- TODO: which routes are rate-limited and how -->
+Protect auth, anything that sends email/SMS, and expensive endpoints (LLM,
+search). Key by user id when authed, else by IP. Return **429** with `Retry-After`.
+
+```ts
+const { success } = await ratelimit.limit(user?.id ?? ip)
+if (!success) return apiError(429, "rate_limited")
+```
+
+See `../patterns/security.md` § Rate limiting for policy.
+
+<!-- TODO: project limiter (Upstash / middleware) + per-route limits -->
+

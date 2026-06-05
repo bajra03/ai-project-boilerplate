@@ -2,7 +2,7 @@
 
 Fills `.ai/roadmap.md` with project-specific phases. Run it:
 
-- **First time** — right after `bootstrap.md` completes, to draft Pre-phase + Phase 1–3.
+- **First time** — right after `bootstrap.md` + `product-discovery.md` complete, to draft Pre-phase + Phase 1–4.
 - **Again later** — when you finish MVP and want to plan V1/V2, refresh dates, or replan after a pivot.
 
 The prompt detects whether the roadmap is empty (full fill) or already filled (refresh / extend).
@@ -30,8 +30,12 @@ PROJECT CONTEXT TO LOAD
 - CLAUDE.md → stack, commands, conventions
 - .ai/context/architecture.md → components, data flow
 - .ai/context/tech-stack.md → frameworks
+- .ai/product/brief.md → MVP scope + non-goals (Phase scope comes from here)
+- .ai/product/risks.md → High×High risks → Pre-phase spikes
+- .ai/product/metrics.md → funnel/KPIs (Phase 4 measurement)
 - .ai/schemas/database.md + .ai/schemas/api.md → data surfaces (if present)
 - .ai/design/design.md → tokens, component rules, a11y (if UI project)
+- .ai/design/ux-flows.md → core flows + states (Phase 1 deliverables come from here)
 - .ai/runbooks/deploy.md → deploy target
 - .ai/tasks/backlog.md → already-rejected scope (don't add to phases)
 
@@ -53,15 +57,23 @@ FILL .ai/roadmap.md
 
 For MODE=fill:
 - Pre-phase deliverables → derive from CLAUDE.md "Commands" + tech-stack.md
-  (scaffold, lint/format, env, CI, .ai/ context)
-- Phase 1 (frontend + mock data) deliverables → derive from user's core flows
-  + .ai/design/design.md. Reference src/mocks/ for fixtures.
+  (scaffold, lint/format, env, CI, .ai/ context). ADD a risk-spike deliverable
+  for each High×High risk in .ai/product/risks.md. Fill the Pre-phase
+  "Validation gate" with the kill-criteria for those spikes.
+- Phase 1 (frontend + mock data) deliverables → derive from .ai/design/ux-flows.md
+  core flows + .ai/design/design.md. Reference src/mocks/ for fixtures. Fill the
+  Phase 1 "Validation gate" — put the prototype in front of real/target users
+  before backend cost.
 - Phase 2 (backend + real data) deliverables → derive from .ai/schemas/database.md
   + .ai/schemas/api.md + auth model.
 - Phase 3 (polish + launch) deliverables → derive from .ai/runbooks/deploy.md
   + standard launch checklist (errors, perf, SEO, analytics).
+- Phase 4 (post-launch: measure & iterate) deliverables → derive from
+  .ai/product/metrics.md (funnel/KPIs live) + .ai/runbooks/incident.md +
+  .ai/product/risks.md review. This phase closes the loop — keep it.
 - Dates: backfill from launch window. Spread phases proportionally.
 - Status: Pre-phase = "in progress", rest = "not started".
+- Keep the "Validation gate" blocks the template already has — fill, don't drop them.
 
 For MODE=refresh:
 - Mark completed phases with [x] on all deliverables + Status: done + end date.

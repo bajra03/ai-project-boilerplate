@@ -71,6 +71,9 @@ PROCESS (follow in order, don't skip)
          — only if UI surface
        - Domain glossary terms specific to the business
        - "Why we chose X" rationale for non-obvious tech picks
+       - Product basics (for .ai/product/, brief — full brainstorm is step 4b):
+         core users + problem solved; what success looks like (one metric);
+         riskiest assumption (what must be true for this to work)
        - IF monorepo: which app is the primary work surface?
          (ambiguous-only — skip if obvious)
 
@@ -110,34 +113,48 @@ PROCESS (follow in order, don't skip)
        Claude does not assume the dep exists.
    - .ai/context/glossary.md → domain terms from my answers + code (entity names, enums)
    - .ai/patterns/components.md → form pattern, data fetching strategy (if web/mobile)
-   - .ai/patterns/api-routes.md → route conventions (if API surface exists)
-   - .ai/patterns/db-queries.md → query patterns (if DB exists)
+   - .ai/patterns/api-routes.md → route conventions + webhooks/rate-limit (if API surface)
+   - .ai/patterns/db-queries.md → query patterns + migration commands (if DB exists)
    - .ai/patterns/error-handling.md → error conventions
+   - .ai/patterns/{testing,security,state-management,env-config,observability}.md
+     → fill the "Project specifics" block in each from the stack (test runner,
+       auth/roles, server-cache lib, env validation, logger/error tracking)
+   - .ai/runbooks/incident.md → alert source, status page, rollback owner, escalation
    - .ai/schemas/database.md → tables (read schema files if present)
    - .ai/schemas/api.md → endpoints (read route files if present)
    - .ai/schemas/types.md → core types (read src/types/ if present)
    - .ai/runbooks/*.md → adjust commands to match this project + PM + workspace shape
    - .ai/tasks/current.md → "Initial setup — bootstrapping context" + today's date
    - .ai/tasks/backlog.md → any "explicitly rejected" items from my answers
+   - .ai/product/* → seed brief.md / metrics.md / risks.md from the step 2a
+     product answers (rough draft — full pass is step 4b)
 
 4. DESIGN FOLDER DECISION
    - UI project (React/Vue/Svelte/mobile)?
-     → Run `.ai/prompts/design-discovery.md` end-to-end. It is a Senior PM
-       + Senior Frontend Designer brainstorm that:
-         A. Detects the project category
-         B. Proposes 3–5 style directions tailored to it
-         C. Waits for the user to pick (or paste a reference URL, or combine)
-         D. Records the chosen direction in design.md's `## Design Direction`
-         E. Fills Tokens + Component Rules + Accessibility aligned with it
+     → Run `.ai/prompts/design-discovery.md` end-to-end — a Senior PM + Frontend
+       Designer brainstorm: detect category → propose 3–5 directions → user picks
+       → record in design.md `## Design Direction` → fill Tokens + Component Rules
+       + Accessibility.
+     → Then fill `.ai/design/ux-flows.md`: the IA / nav map and 3–5 core flows
+       (with empty/loading/error/edge states) from the product brief. Roadmap
+       Phase 1 is built from these flows.
 
-       Do NOT fill design.md before running the discovery prompt — even
-       if the codebase already has Tailwind/shadcn configured. In that
-       case, the discovery confirms the direction matches the code (or
-       surfaces a pivot).
+       Do NOT fill design.md before running the discovery prompt — even if
+       Tailwind/shadcn is already configured. Then it confirms the direction
+       matches the code (or surfaces a pivot).
 
    - Backend / CLI / library only?
      → Ask me first: "Delete .ai/design/ since no UI surface? (y/n)"
        Only delete after I confirm.
+
+4b. PRODUCT DISCOVERY
+   - Has a product/business surface (most apps)?
+     → Run `.ai/prompts/product-discovery.md` end-to-end — Senior PM brainstorm
+       that confirms problem/users/job, then fills `product/brief.md`,
+       `metrics.md`, `risks.md`. Reuse step 2a answers; don't re-ask. High×High
+       risks become Pre-phase spikes in the roadmap.
+   - Pure library / internal tool with no product surface?
+     → Ask first: "Delete .ai/product/ since no product surface? (y/n)" — delete only after I confirm.
 
 5. CREATE FIRST ADR
    Add .ai/context/decisions/0001-stack.md using the template at
@@ -158,8 +175,10 @@ End with a structured summary:
 - Files left empty (and why): [list]
 - Stack items marked "planned — not yet installed": [list, or "none"]
 - Monorepo docs filled (workspace layout, per-app commands): [yes/no/N/A]
+- Product docs filled (brief / metrics / risks): [yes/no/N/A]
 - Open questions you'd still like answered later: [list, or "none"]
-- Suggested next prompt: run `.ai/prompts/roadmap.md` to draft Pre-phase + Phase 1–3 in `.ai/roadmap.md`
+- Suggested next prompts: `product-discovery.md` (if step 4b skipped), then
+  `roadmap.md` — draft Pre-phase + Phase 1–4, scoped from the brief + risks
 
 RULES
 - Don't invent facts. If unsure, leave the TODO and note it in the final report.

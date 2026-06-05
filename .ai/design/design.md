@@ -281,6 +281,214 @@ Up to ~3 conditional branches → inline `cn()` is fine. More than that → extr
 
 ---
 
+# Layout Patterns
+
+Reusable page skeletons. Compose with `gap-*` on a flex/grid parent — never
+margin-stacking or wrapper soup. Density is set by the `Layout` field in Design
+Direction; the numbers below make "spacious" vs "grid-dense" concrete.
+
+## Density
+
+| Direction | Section gap | Card grid gap | Max content width |
+|-----------|-------------|---------------|-------------------|
+| Spacious | `gap-12` / `gap-16` | `gap-6` | `max-w-4xl` |
+| Balanced (default) | `gap-8` | `gap-4` | `max-w-6xl` |
+| Grid-dense | `gap-4` / `gap-6` | `gap-3` | `max-w-7xl` |
+
+## App shell (sidebar + content)
+
+```tsx
+<div className="grid min-h-dvh grid-cols-1 lg:grid-cols-[16rem_1fr]">
+  <aside className="hidden border-r lg:block">{/* nav */}</aside>
+  <main className="flex flex-col gap-8 p-6">{children}</main>
+</div>
+```
+
+## Two-column (content + aside)
+
+```tsx
+<div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_20rem]">
+  <section>{/* main */}</section>
+  <aside className="lg:sticky lg:top-20 lg:self-start">{/* filters/summary */}</aside>
+</div>
+```
+
+## Card grid (responsive, auto-fill)
+
+```tsx
+<ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {items.map((i) => <li key={i.id}><Card>{/* ... */}</Card></li>)}
+</ul>
+```
+
+## Centered form
+
+```tsx
+<main className="mx-auto flex w-full max-w-md flex-col gap-6 p-6">
+  {/* one column, comfortable reading width, never full-bleed inputs */}
+</main>
+```
+
+## Hero
+
+```tsx
+<section className="mx-auto flex max-w-4xl flex-col items-center gap-6 py-16 text-center md:py-24">
+  <h1 className="text-3xl md:text-4xl">…</h1>
+  <p className="text-lg text-muted-foreground">…</p>
+</section>
+```
+
+```tsx
+// ❌ Don't: stack margins to fake a layout
+<div><div className="mb-8" /><div className="mt-12" /></div>
+// ✅ Do: one flex/grid parent owns the rhythm with gap-*
+```
+
+---
+
+# Component State Catalog
+
+Every interactive element ships **all** its states — a button with only a default
+style is unfinished. Don't invent per-component colors; use tokens.
+
+## Interactive element states
+
+| State | Cue (token-based) | Notes |
+|-------|-------------------|-------|
+| Default | base tokens | resting |
+| Hover | `hover:bg-*` one step | pointer only — never the sole signal |
+| Focus | `focus-visible:ring-2 ring-ring` | keyboard — never remove (see a11y) |
+| Active | `active:` slightly darker/scale | pressed feedback |
+| Disabled | `opacity-50 pointer-events-none` | also set `disabled`/`aria-disabled` |
+| Loading | spinner + `disabled` | keep width stable — no layout shift |
+
+```tsx
+<Button disabled={isPending}>
+  {isPending && <Spinner className="mr-2 size-4" />}
+  {isPending ? "Booking…" : "Book"}
+</Button>
+```
+
+## Async content states
+
+Every data-driven view handles four states explicitly — never just the happy path.
+
+| State | Render |
+|-------|--------|
+| Loading | Skeleton matching final layout (not a bare spinner for page loads) |
+| Empty | Friendly empty state + primary action ("No tours yet — add one") |
+| Error | Message + retry; never a blank screen or raw error text |
+| Loaded | The content |
+
+```tsx
+if (isLoading) return <TourListSkeleton />
+if (error) return <ErrorState onRetry={refetch} />
+if (!tours.length) return <EmptyState action={<Button>Add tour</Button>} />
+return <TourList tours={tours} />
+```
+
+```tsx
+// ❌ Don't: ship only the loaded state — empty/error look broken to users
+return <TourList tours={tours} />
+```
+
+---
+
+# Motion & Animation
+
+Motion clarifies change; it isn't decoration. Budget is set by the `Animation`
+field in Design Direction. Always honor `prefers-reduced-motion` (see a11y).
+
+## Duration & easing
+
+| Token | Duration | Use for |
+|-------|----------|---------|
+| `duration-150` | 150ms | Hover, small toggles, color changes |
+| `duration-200` | 200ms | Dropdowns, tooltips, default UI |
+| `duration-300` | 300ms | Dialogs, drawers, larger surfaces |
+| `duration-500`+ | 500ms+ | Page/hero transitions only — sparingly |
+
+Easing: `ease-out` for enter (fast→settle), `ease-in` for exit. Avoid `linear`
+except continuous loops (spinners).
+
+```tsx
+// ✅ Token-based, reduced-motion-safe
+<div className="transition-colors duration-150 motion-reduce:transition-none" />
+
+// ❌ Don't: animate layout-affecting props (width/height/top) — janky, off main thread
+<div className="transition-[width] duration-300" />
+// ✅ Do: animate transform + opacity (GPU-friendly, 60fps)
+<div className="transition-[transform,opacity] duration-200" />
+```
+
+- Animate `transform` and `opacity` only for movement — they hit 60fps.
+- No animation longer than ~300ms blocking interaction.
+- <!-- TODO: animation library if any (Framer Motion / CSS only) -->
+
+---
+
+# Content & Microcopy
+
+UI text is part of the design. Keep one voice. <!-- TODO: voice in 3 words,
+e.g. "clear, warm, concise" — set during design-discovery -->
+
+## Rules
+
+| Element | Pattern | Example |
+|---------|---------|---------|
+| Buttons | Verb + object, title case-ish | "Book tour", "Save changes" — not "Submit", "OK" |
+| Empty states | What's missing + the next action | "No bookings yet. Create your first." |
+| Errors (user) | Plain, no blame, a way forward | "That email's taken. Try signing in." |
+| Errors (system) | Honest + recoverable | "Something went wrong. Retry." — never a stack trace |
+| Form hints | Why, before the field | "We'll email your receipt here." |
+| Confirmations | State the consequence | "Delete tour? This can't be undone." |
+
+```tsx
+// ❌ Don't: vague, technical, or blaming
+<button>Submit</button>
+<p>Error 422: validation failed</p>
+<p>You entered an invalid value</p>
+
+// ✅ Do: specific, human, actionable
+<button>Book tour</button>
+<p>Pick at least one date to continue.</p>
+```
+
+- Sentence case for almost everything; avoid ALL-CAPS except short labels.
+- Numbers, dates, currency: one format, defined in the glossary / `tech-stack.md`.
+
+---
+
+# Performance Budget
+
+Perceived speed is a design property. Defaults that keep it fast:
+
+## Targets (Core Web Vitals)
+
+| Metric | Target | Means |
+|--------|--------|-------|
+| LCP | < 2.5s | Largest element paints fast |
+| INP | < 200ms | Interactions feel instant |
+| CLS | < 0.1 | Layout doesn't jump |
+
+## Rules
+
+```tsx
+// ✅ Images: framework <Image> — sizing, lazy-load, modern formats for free
+<Image src={src} alt="…" width={400} height={300} />
+// ❌ Don't: raw <img> with no dimensions — causes CLS + ships full-size files
+<img src={src} />
+```
+
+- **Reserve space** for images, embeds, async content (width/height or skeleton)
+  → no layout shift.
+- **Fonts:** `font-display: swap`, preload the primary face, subset; cap families.
+- **Defer** below-the-fold and heavy client JS; prefer Server Components.
+- **Don't ship** a charting/date/icon mega-lib for one use — import the piece.
+- <!-- TODO: project perf budget — bundle ceiling, image CDN, monitoring tool -->
+
+---
+
 # Accessibility Baseline
 
 WCAG 2.1 AA minimum. **Never skip these — fixing a11y later is 10× harder.**

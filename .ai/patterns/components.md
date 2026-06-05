@@ -57,8 +57,57 @@ export function StaticHeading() { return <h1>Hi</h1> }
 
 ## Forms
 
-<!-- TODO: form pattern (react-hook-form + Zod), one canonical example -->
+react-hook-form + Zod. Define the schema once, infer the type, share it with the
+API route (see `api-routes.md`). The field's error comes from the resolver — no
+hand-rolled validation state.
+
+```tsx
+"use client"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+const Schema = z.object({ email: z.string().email(), seats: z.number().min(1) })
+type Values = z.infer<typeof Schema>
+
+export function BookingForm() {
+  const form = useForm<Values>({ resolver: zodResolver(Schema) })
+  const onSubmit = form.handleSubmit(async (values) => { /* call mutation */ })
+  return (
+    <form onSubmit={onSubmit}>
+      <input {...form.register("email")} aria-invalid={!!form.formState.errors.email} />
+      {form.formState.errors.email && <p className="text-destructive">{form.formState.errors.email.message}</p>}
+      <button disabled={form.formState.isSubmitting}>Book</button>
+    </form>
+  )
+}
+```
+
+- One Zod schema is the source of truth for type + validation, client and server.
+- Wire errors to fields for a11y (`aria-invalid` + message) — see `../design/design.md` § Forms.
+
+```tsx
+// ❌ Don't: useState per field + manual validation — drifts from the API contract
+const [email, setEmail] = useState(""); const [err, setErr] = useState("")
+```
 
 ## Data fetching
 
-<!-- TODO: how Server Components fetch (direct DB call vs API route) -->
+**Server Components fetch directly through the query layer** — no internal
+`fetch("/api/...")` round-trip. Client Components read via the server cache
+(see `state-management.md`).
+
+```tsx
+// ✅ Server Component — call the query module directly (no HTTP hop)
+import { listTours } from "@/db/queries/tours"
+export default async function ToursPage() {
+  const tours = await listTours({ operatorId })   // runs on the server
+  return <TourList tours={tours} />
+}
+
+// ❌ Don't: fetch your own API from a Server Component — pointless network hop
+const tours = await fetch("https://.../api/tours").then(r => r.json())
+```
+
+- Server Component → query module directly. Client Component → react-query/SWR.
+- API routes are for **external** callers and client mutations, not server-to-self.

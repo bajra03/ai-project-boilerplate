@@ -5,10 +5,11 @@ Structured project context. Update as the project evolves.
 ## Folders
 
 - **`context/`** — Architecture, stack, glossary, decisions
-- **`patterns/`** — Code templates (how we write things here)
-- **`design/`** — Design tokens, component usage rules, a11y baseline (optional for backend-only projects)
+- **`product/`** — Why we're building this: brief, metrics, risks (optional for pure-library projects)
+- **`patterns/`** — Code templates: components, API, DB, errors, testing, security, state, env, observability
+- **`design/`** — Design tokens, component rules, a11y baseline, UX flows (optional for backend-only projects)
 - **`schemas/`** — Data shapes (DB, API, types)
-- **`runbooks/`** — Step-by-step playbooks
+- **`runbooks/`** — Step-by-step playbooks (add-feature, debug, deploy, incident)
 - **`tasks/`** — Current and backlog work
 - **`prompts/`** — Reusable prompt templates
 

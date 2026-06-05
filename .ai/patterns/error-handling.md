@@ -73,4 +73,19 @@ if (err.message === "no rows") { /* ... */ }   // brittle
 
 ## Logging
 
-<!-- TODO: which logger, where logs go, what to include / redact -->
+Logging strategy lives in `observability.md` — it's the single source of truth
+for the logger, levels, request correlation, and PII redaction. Two rules that
+matter here:
+
+- **Log unexpected errors once, at the boundary** (the route handler / error
+  boundary that catches them) — not at every layer they bubble through.
+- **Never log a caught secret or full PII record.** Log the id, not the value.
+
+```ts
+// ✅ Log once where it's handled, with context
+catch (err) {
+  if (err instanceof AppError) return apiError(err.status, err.code, err.details)
+  logger.error("unhandled", { err, requestId })   // see observability.md
+  return apiError(500, "internal_error")
+}
+```
