@@ -5,7 +5,7 @@ Reusable `.ai/` + `CLAUDE.md` scaffold to make AI assistants (Claude, etc.) work
 ## What's inside
 
 - **`CLAUDE.md`** — root file, auto-loaded by Claude Code every session
-- **`.ai/`** — structured context for AI: architecture, patterns, design, schemas, runbooks
+- **`.ai/`** — structured context for AI: product, architecture, patterns, design, schemas, runbooks — plus bootstrap + discovery prompts
 
 ## How to use
 
@@ -29,13 +29,14 @@ npx degit your-user/ai-boilerplate /path/to/new-project
 After copying, open the project in Claude Code and paste the bootstrap prompt from `.ai/prompts/bootstrap.md`. It walks Claude through:
 
 1. **Scan** the codebase (package.json, src/, configs)
-2. **Ask** up to 5 clarifying questions in one batch
+2. **Ask** clarifying questions in one batch (incl. users / problem / success metric)
 3. **Fill** every TODO in `CLAUDE.md` and `.ai/`
-4. **Decide** whether to keep or delete `.ai/design/` based on project type
-5. **Write** the first ADR documenting the stack choice
-6. **Clean up** by deleting itself
+4. **Design discovery** — run `.ai/prompts/design-discovery.md` (visual direction + `design/ux-flows.md`), or delete `.ai/design/` if no UI
+5. **Product discovery** — run `.ai/prompts/product-discovery.md` (brief / metrics / risks), or delete `.ai/product/` if no product surface
+6. **Write** the first ADR documenting the stack choice
+7. **Clean up** by deleting itself
 
-Output: a structured handoff summary listing what was filled, what's still empty, and what to ask later.
+Output: a structured handoff summary listing what was filled, what's still empty, and what to ask later. Suggested next: `product-discovery.md` (if skipped) → `roadmap.md`.
 
 ## Update workflow
 
@@ -62,6 +63,7 @@ When the boilerplate evolves:
 | `.ai/design/ux-flows.md` | Information architecture + core user flows |
 | `.ai/schemas/*.md` | Data shapes: DB tables, API contracts, types |
 | `.ai/runbooks/*.md` | Step-by-step playbooks: add feature, debug, deploy, incident |
+| `.ai/roadmap.md` | Staged delivery plan (Pre-phase → Phase 1–4) |
 | `.ai/tasks/current.md` | What's in progress now (continuity between sessions) |
 | `.ai/tasks/backlog.md` | What's next |
 | `.ai/prompts/bootstrap.md` | One-time setup prompt for fresh projects |

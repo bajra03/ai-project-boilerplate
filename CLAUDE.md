@@ -44,7 +44,7 @@ pnpm db:studio
 - <!-- TODO: project-specific must-dos -->
 - Run typecheck before claiming done
 - Match existing patterns — see `.ai/patterns/`
-- For UI work, follow `.ai/design/design.md` (tokens, component rules, a11y)
+- For UI work, follow `.ai/design/design.md` (tokens, components, states, motion, a11y) + `.ai/design/ux-flows.md` (flows)
 - Write tests per `.ai/patterns/testing.md`; ship a regression test with each bug fix
 - Check authz (ownership/role), not just authn — see `.ai/patterns/security.md`
 
