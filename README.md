@@ -54,7 +54,8 @@ When the boilerplate evolves:
 | `.ai/context/architecture.md` | System overview, data flow |
 | `.ai/context/tech-stack.md` | Frameworks, versions, why chosen |
 | `.ai/context/glossary.md` | Domain terms |
-| `.ai/context/decisions/` | ADRs — one per major decision |
+| `.ai/context/decisions/` | ADRs — one per major decision (format in its `README.md`) |
+| `.ai/product/README.md` | Index of `product/` — what each file is for, when to update |
 | `.ai/product/brief.md` | Problem, users, JTBD, success metrics, scope |
 | `.ai/product/metrics.md` | North star, KPIs, funnel, event instrumentation |
 | `.ai/product/risks.md` | Risk register — assumptions to de-risk early |

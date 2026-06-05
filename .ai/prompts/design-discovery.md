@@ -112,6 +112,15 @@ Don't rewrite the file — only replace TODO markers.
 - Verified pairs: list semantic color pairs that pass WCAG in both light and dark (only if you can verify against globals.css)
 - Leave the rest of the baseline as-is — it's WCAG-driven, not direction-specific
 
+### 6. FILL `.ai/design/ux-flows.md`
+
+After design.md is filled, fill `ux-flows.md` from the product brief (or scanned routes if no brief yet):
+
+- **IA / nav map** — the screen tree and how users move between areas
+- **3–5 core flows** — each with empty / loading / error / edge states
+
+Roadmap Phase 1 is built from these flows, so don't skip them.
+
 ## What this is NOT
 
 - Don't dictate a single style — suggest, then ask.

@@ -134,9 +134,8 @@ PROCESS (follow in order, don't skip)
      → Run `.ai/prompts/design-discovery.md` end-to-end — a Senior PM + Frontend
        Designer brainstorm: detect category → propose 3–5 directions → user picks
        → record in design.md `## Design Direction` → fill Tokens + Component Rules
-       + Accessibility.
-     → Then fill `.ai/design/ux-flows.md`: the IA / nav map and 3–5 core flows
-       (with empty/loading/error/edge states) from the product brief. Roadmap
+       + Accessibility → fill `.ai/design/ux-flows.md` (its step 6): the IA /
+       nav map and 3–5 core flows with empty/loading/error/edge states. Roadmap
        Phase 1 is built from these flows.
 
        Do NOT fill design.md before running the discovery prompt — even if

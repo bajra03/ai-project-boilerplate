@@ -31,6 +31,7 @@ Source: `~/ai-boilerplate/`
 
 ### 1.1.0 — 2026-05-19
 - Added `.ai/design/` folder: `tokens.md`, `components.md`, `a11y.md`, `README.md`
+  (later consolidated into a single `design.md` in 1.3.0)
 - Indexed in `.ai/README.md`, root `README.md` file legend, and `CLAUDE.md` "When unsure" + "Always"
 
 ### 1.0.0 — 2026-05-19
